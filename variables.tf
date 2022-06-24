@@ -59,7 +59,7 @@ variable "key_management" {
     use_hs_crypto             = optional(bool) // Will force data source to be used. If not true, will default to kms
     use_data                  = optional(bool)
     authorize_vpc_reader_role = optional(bool)
-    resource_group_id         = optional(string) // Resource group for key management resources
+    resource_group_name       = optional(string) // Resource group for key management resources
   })
   default = {
     name                      = "kms"
@@ -141,10 +141,10 @@ variable "cos" {
   description = "Object describing the cloud object storage instance, buckets, and keys. Set `use_data` to true to use existing instance instance"
   type = list(
     object({
-      name              = string
-      use_data          = optional(bool)
-      resource_group_id = optional(string)
-      plan              = optional(string)
+      name                = string
+      use_data            = optional(bool)
+      resource_group_name = optional(string)
+      plan                = optional(string)
       buckets = list(object({
         name                  = string
         storage_class         = string
@@ -355,7 +355,7 @@ variable "secrets_manager" {
     use_secrets_manager = bool
     name                = optional(string)
     kms_key_name        = optional(string)
-    resource_group_id   = optional(string)
+    resource_group_name = optional(string)
   })
   default = {
     use_secrets_manager = false

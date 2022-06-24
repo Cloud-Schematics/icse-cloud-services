@@ -140,10 +140,10 @@ variable "cos" {
   description = "Object describing the cloud object storage instance, buckets, and keys. Set `use_data` to false to create instance"
   type = list(
     object({
-      name              = string           # Name of the COS instance
-      use_data          = optional(bool)   # Optional - Get existing COS instance from data
-      resource_group_id = optional(string) # ID of resource group where COS should be provisioned
-      plan              = optional(string) # Can be `lite` or `standard`
+      name                = string           # Name of the COS instance
+      use_data            = optional(bool)   # Optional - Get existing COS instance from data
+      resource_group_name = optional(string) # Name of resource group where COS should be provisioned
+      plan                = optional(string) # Can be `lite` or `standard`
       ##############################################################################
       # For more information on bucket creation, see the Terraform Documentation
       # https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket

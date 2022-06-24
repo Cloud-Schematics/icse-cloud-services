@@ -59,13 +59,16 @@ module "encryption_key_map" {
 ##############################################################################
 
 resource "ibm_resource_instance" "secrets_manager" {
-  count             = var.secrets_manager.use_secrets_manager ? 1 : 0
-  name              = "${var.prefix}-${var.secrets_manager.name}"
-  service           = "secrets-manager"
-  location          = var.region
-  plan              = "standard"
-  resource_group_id = var.secrets_manager.resource_group_id
-
+  count    = var.secrets_manager.use_secrets_manager ? 1 : 0
+  name     = "${var.prefix}-${var.secrets_manager.name}"
+  service  = "secrets-manager"
+  location = var.region
+  plan     = "standard"
+  resource_group_id = (
+    var.secrets_manager.resource_group_name == null
+    ? null
+    : data.ibm_resource_group.resource_group[var.secrets_manager.resource_group_name].id
+  )
 
   parameters = {
     kms_key = (

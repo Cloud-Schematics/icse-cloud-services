@@ -1,3 +1,32 @@
+
+##############################################################################
+# Resource Group where VPC Resources Will Be Created
+##############################################################################
+
+data "ibm_resource_group" "resource_group" {
+  for_each = toset(
+    distinct(
+      concat(
+        var.cos.*.resource_group_name,
+        flatten([
+          [
+            for group in(var.key_management.resource_group_name == null ? [] : [var.key_management.resource_group_name]) :
+            group
+          ],
+          [
+            for group in(var.secrets_manager.resource_group_name == null ? [] : [var.secrets_manager.resource_group_name]) :
+            group
+          ]
+        ])
+      )
+    )
+  )
+  name = each.key
+}
+
+##############################################################################
+
+
 ##############################################################################
 # Key Management
 ##############################################################################
@@ -9,7 +38,7 @@ module "key_management" {
   prefix                    = var.prefix
   tags                      = var.tags
   service_endpoints         = var.service_endpoints
-  resource_group_id         = var.key_management.resource_group_id
+  resource_group_id         = var.key_management.resource_group_name == null ? null : data.ibm_resource_group.resource_group[var.key_management.resource_group_name].id
   use_hs_crypto             = var.key_management.use_hs_crypto
   use_data                  = var.key_management.use_data
   authorize_vpc_reader_role = var.key_management.authorize_vpc_reader_role
@@ -37,6 +66,16 @@ module "cloud_object_storage" {
   key_management_service_guid = var.disable_key_management == false ? null : module.key_management["key_management"].key_management_guid
   key_management_service_name = var.disable_key_management == false ? null : local.key_management_service_name
   key_management_keys         = var.disable_key_management == false ? [] : module.key_management["key_management"].keys
+  cos = [
+    for instance in var.cos :
+    merge(instance, {
+      resource_group_id = (
+        var.cos.resource_group_name == null
+        ? null
+        : data.ibm_resource_group.resource_group[instance.resource_group_name].id
+      )
+    })
+  ]
 }
 
 ##############################################################################
