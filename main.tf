@@ -72,7 +72,7 @@ module "cloud_object_storage" {
     for instance in var.cos :
     merge(instance, {
       resource_group_id = (
-        var.cos.resource_group_name == null
+        instance.resource_group_name == null
         ? null
         : data.ibm_resource_group.resource_group[instance.resource_group_name].id
       )
