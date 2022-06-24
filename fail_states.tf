@@ -20,7 +20,7 @@ locals {
   CONFIGURATION_FAILURE_unfound_cos_bucket_key = regex("true",
     length(local.cos_bucket_key_names) == 0 && length(var.keys) == 0
     ? true
-    : var.disable_key_management == false && length(local.cos_bucket_key_names) > 0
+    : var.disable_key_management == true && length(local.cos_bucket_key_names) > 0
     ? false
     : var.disable_key_management == true && length(local.cos_bucket_key_names) == 0
     ? true
