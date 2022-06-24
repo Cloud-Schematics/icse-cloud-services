@@ -2,7 +2,7 @@
 # Fail if COS Buckets use key not found in key_management key definition
 ##############################################################################
 
-/*locals {
+locals {
   cos_bucket_key_names = distinct(
     flatten([
       for instance in var.cos :
@@ -16,7 +16,7 @@
   cos_buckets_have_valid_keys = length([
     for bucket in local.cos_bucket_key_names :
     false if !contains(local.kms_key_names, bucket)
-  ]) > 0
+  ]) == 0
   CONFIGURATION_FAILURE_unfound_cos_bucket_key = regex("true",
     length(local.cos_bucket_key_names) == 0 && length(var.keys) == 0
     ? true
@@ -28,6 +28,6 @@
     ? false
     : local.cos_buckets_have_valid_keys
   )
-}*/
+}
 
 ##############################################################################
