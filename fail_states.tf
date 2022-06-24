@@ -3,13 +3,15 @@
 ##############################################################################
 
 locals {
-  cos_bucket_key_names = flatten([
-    for instance in var.cos :
-    [
-      for bucket in instance.buckets :
-      bucket.kms_key if bucket.kms_key != null
-    ] if length(instance.buckets) > 0
-  ])
+  cos_bucket_key_names = distinct(
+    flatten([
+      for instance in var.cos :
+      [
+        for bucket in instance.buckets :
+        bucket.kms_key if bucket.kms_key != null
+      ] if length(instance.buckets) > 0
+    ])
+  )
   kms_key_names = var.keys.*.name
   cos_buckets_have_valid_keys = length([
     for bucket in local.cos_bucket_key_names :
