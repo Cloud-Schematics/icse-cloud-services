@@ -2,7 +2,7 @@
 # Fail if COS Buckets use key not found in key_management key definition
 ##############################################################################
 
-locals {
+/*locals {
   cos_bucket_key_names = distinct(
     flatten([
       for instance in var.cos :
@@ -28,6 +28,6 @@ locals {
     ? false
     : local.cos_buckets_have_valid_keys
   )
-}
+}*/
 
 ##############################################################################
