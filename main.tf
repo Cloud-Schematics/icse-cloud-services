@@ -1,4 +1,3 @@
-
 ##############################################################################
 # Resource Group where VPC Resources Will Be Created
 ##############################################################################
@@ -41,7 +40,7 @@ module "key_management" {
   prefix                    = var.prefix
   tags                      = var.tags
   service_endpoints         = var.service_endpoints
-  resource_group_id         = var.key_management.resource_group_name == null ? null : data.ibm_resour`ce_group.resource_group[var.key_management.resource_group_name].id
+  resource_group_id         = var.key_management.resource_group_name == null ? null : data.ibm_resource_group.resource_group[var.key_management.resource_group_name].id
   use_hs_crypto             = var.key_management.use_hs_crypto
   use_data                  = var.key_management.use_data
   authorize_vpc_reader_role = var.key_management.authorize_vpc_reader_role
