@@ -65,7 +65,9 @@ resource "ibm_resource_instance" "secrets_manager" {
   location = var.region
   plan     = "standard"
   resource_group_id = (
-    var.secrets_manager.resource_group_name == null
+    var.use_resource_group_ids == true 
+    ? var.secrets_manager.resource_group_name
+    : var.secrets_manager.resource_group_name == null
     ? null
     : data.ibm_resource_group.resource_group[var.secrets_manager.resource_group_name].id
   )

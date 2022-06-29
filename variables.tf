@@ -40,6 +40,12 @@ variable "service_endpoints" {
   }
 }
 
+variable use_resource_group_ids {
+  description = "OPTIONAL - Use resource group IDs instead of passing in existing resource group names."
+  type        = bool
+  default     = false
+}
+
 ##############################################################################
 
 ##############################################################################
