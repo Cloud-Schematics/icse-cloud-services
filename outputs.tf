@@ -4,27 +4,27 @@
 
 output "key_management_name" {
   description = "Name of key management service"
-  value       = var.disable_key_management == false ? null : module.key_management["key_management"].key_management_name
+  value       = var.disable_key_management == true ? null : module.key_management["key_management"].key_management_name
 }
 
 output "key_management_crn" {
   description = "CRN for KMS instance"
-  value       = var.disable_key_management == false ? null : module.key_management["key_management"].key_management_crn
+  value       = var.disable_key_management == true ? null : module.key_management["key_management"].key_management_crn
 }
 
 output "key_management_guid" {
   description = "GUID for KMS instance"
-  value       = var.disable_key_management == false ? null : module.key_management["key_management"].key_management_guid
+  value       = var.disable_key_management == true ? null : module.key_management["key_management"].key_management_guid
 }
 
 output "key_rings" {
   description = "Key rings created by module"
-  value       = var.disable_key_management == false ? null : module.key_management["key_management"].key_rings
+  value       = var.disable_key_management == true ? null : module.key_management["key_management"].key_rings
 }
 
 output "keys" {
   description = "List of names and ids for keys created."
-  value       = var.disable_key_management == false ? null : module.key_management["key_management"].keys
+  value       = var.disable_key_management == true ? null : module.key_management["key_management"].keys
 }
 
 ##############################################################################
