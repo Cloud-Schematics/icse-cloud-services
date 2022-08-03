@@ -7,7 +7,7 @@ data "ibm_resource_group" "resource_group" {
     distinct(
       concat(
         [
-          for instance in var.cos:
+          for instance in var.cos :
           instance.resource_group_name if instance.resource_group_name != null
         ],
         flatten([
@@ -72,7 +72,7 @@ module "cloud_object_storage" {
     for instance in var.cos :
     merge(instance, {
       resource_group_id = (
-        var.use_resource_group_ids == true 
+        var.use_resource_group_ids == true
         ? instance.resource_group_name
         : instance.resource_group_name == null
         ? null

@@ -33,6 +33,10 @@ output "keys" {
 # Cloud Object Storage Variables
 ##############################################################################
 
+output "cos_suffix" {
+  description = "Random suffix appended to COS resources."
+  value       = module.cloud_object_storage.cos_suffix
+}
 
 output "cos_instances" {
   description = "List of COS resource instances with shortname, name, id, and crn."
